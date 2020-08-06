@@ -3,11 +3,17 @@ services:
   zookeeper:
     image: 'registry.aliyuncs.com/acs-sample/zookeeper:3.4.8'
     hostname: zookeeper
+    ports:
+      - 2181:2181
   producer:
+    build: ../service-producer
     image: 'producer:latest'
     environment:
       - ZOOKEEPER_SERVER=zookeeper
+    ports:
+      - 20880:20880
   consumer:
+    build: ../service-consumer
     image: 'consumer:latest'
     environment:
       - ZOOKEEPER_SERVER=zookeeper
