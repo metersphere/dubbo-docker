@@ -15,7 +15,7 @@ mvn clean package
 ### 启动应用
 ```sh
 [~/Documents/workspace/dubbo-docker]# cd docker
- wangzhen@MBP-WZ  ~/Documents/workspace/dubbo-docker/docker   master ●  docker-compose up -d
+[~/Documents/workspace/dubbo-docker/docker]# docker-compose up -d
 Creating network "docker_default" with the default driver
 Creating docker_producer_1  ... done
 Creating docker_consumer_1  ... done
