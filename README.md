@@ -14,13 +14,13 @@ mvn clean package
 
 ### 启动应用
 ```sh
-~/Documents/workspace/dubbo-docker   master ●  cd docker
+[~/Documents/workspace/dubbo-docker]# cd docker
  wangzhen@MBP-WZ  ~/Documents/workspace/dubbo-docker/docker   master ●  docker-compose up -d
 Creating network "docker_default" with the default driver
 Creating docker_producer_1  ... done
 Creating docker_consumer_1  ... done
 Creating docker_zookeeper_1 ... done
-~/Documents/workspace/dubbo-docker/docker   master ●  docker ps
+[~/Documents/workspace/dubbo-docker/docker]# docker ps
 CONTAINER ID        IMAGE                                              COMMAND                  CREATED             STATUS              PORTS                                        NAMES
 b6b4849e4902        registry.aliyuncs.com/acs-sample/zookeeper:3.4.8   "/opt/zookeeper.sh"      13 seconds ago      Up 11 seconds       2888/tcp, 0.0.0.0:2181->2181/tcp, 3888/tcp   docker_zookeeper_1
 c6835e7ac8aa        producer:latest                                    "java -Djava.securit…"   13 seconds ago      Up 12 seconds       0.0.0.0:20880->20880/tcp                     docker_producer_1
@@ -29,8 +29,9 @@ d802f0a506ed        consumer:latest                                    "java -Dj
 
 ### 测试服务状态
 ```sh
-~/Documents/workspace/dubbo-docker/docker   master ●  curl http://localhost:8899
+[~/Documents/workspace/dubbo-docker/docker]# curl http://localhost:8899
 Greetings from Dubbo Docker
-~/Documents/workspace/dubbo-docker/docker   master ● 
+[~/Documents/workspace/dubbo-docker/docker]#
 ```
+返回如上内容说明服务正常运行
 
