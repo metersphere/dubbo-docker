@@ -1,117 +1,36 @@
-# Dubbo in Docker Example
+# Dubbo 应用 Demo
 
-Dubbo running in Docker, packaged as a springboot application.
+一个使用了 Dubbo RPC 框架的 SpringBoo 应用，提供了 docker compose 文件方便运行
 
-## Services
+## 使用方式
 
-This demo consistes three services:
+### 前置条件
+本地环境已配置 JDK 及 maven 环境，并且安装了 docker 及 docker-compose
 
-- a zookeper instance
-- a service producer
-- a service consumer
-
-The service producer exposes a ```Greeting``` service through RPC,
-service consumer access the producer.
-
-## Zookeeper
-
-Run a docker image.
-
-## Service Producer
-
-Code in [service-producer](service-producer). API defined in [service-api](service-api).
-
-Build docker image:
-
-```
-cd service-producer
-mvn package
-docker build -t producer .
+### 打包应用
+```sh
+mvn clean package
 ```
 
-## Service Consumer
-
-Code in [service-consumer](service-consumer).
-
-Build docker image:
-
-```
-cd service-consumer
-mvn package
-docker build -t consumer .
-```
-
-## Run
-
-Use docker-compose command to run it.
-
-```
-cd docker
-docker-compose up -d
+### 启动应用
+```sh
+~/Documents/workspace/dubbo-docker   master ●  cd docker
+ wangzhen@MBP-WZ  ~/Documents/workspace/dubbo-docker/docker   master ●  docker-compose up -d
+Creating network "docker_default" with the default driver
+Creating docker_producer_1  ... done
+Creating docker_consumer_1  ... done
+Creating docker_zookeeper_1 ... done
+~/Documents/workspace/dubbo-docker/docker   master ●  docker ps
+CONTAINER ID        IMAGE                                              COMMAND                  CREATED             STATUS              PORTS                                        NAMES
+b6b4849e4902        registry.aliyuncs.com/acs-sample/zookeeper:3.4.8   "/opt/zookeeper.sh"      13 seconds ago      Up 11 seconds       2888/tcp, 0.0.0.0:2181->2181/tcp, 3888/tcp   docker_zookeeper_1
+c6835e7ac8aa        producer:latest                                    "java -Djava.securit…"   13 seconds ago      Up 12 seconds       0.0.0.0:20880->20880/tcp                     docker_producer_1
+d802f0a506ed        consumer:latest                                    "java -Djava.securit…"   13 seconds ago      Up 12 seconds       0.0.0.0:8899->8899/tcp                       docker_consumer_1
 ```
 
-Verify that all works:
-```
-$curl http://localhost:8899/
+### 测试服务状态
+```sh
+~/Documents/workspace/dubbo-docker/docker   master ●  curl http://localhost:8899
 Greetings from Dubbo Docker
+~/Documents/workspace/dubbo-docker/docker   master ● 
 ```
 
-## Run it on Alibaba Cloud
-
-Use [docker/docker-compose-acs.yml](docker/docker-compose-acs.yml) to deploy this application to
-Aliyun Container Service (Alibaba Cloud) swarm cluster.
-
-2017.11.30 Update:
-Add compose v3 sample yml file: [docker/docker-compose-v3.yml](docker/docker-compose-v3.yml)
-
-
-
-### Deploy the application to Kubernetes
-
-2018.8.17 Update:
-
-You can user helm to install this sample in a Kubernetes cluster. 
-
-```
-$ cd docker
-$ helm install -n dubbo-sample dubbo-sample
-```
-
-
-
-Check helm status
-
-```
-$ helm list
-NAME          REVISION	UPDATED                 	STATUS  	CHART                  	NAMESPACE
-dubbo-sample  1       	Fri Aug 17 07:27:00 2018	DEPLOYED	dubbo-sample-0.0.1     	default
-```
-
-
-
-Check kubernetes and service status:
-
-```
-$ kubectl get po,svc
-NAME                                              READY     STATUS    RESTARTS   AGE
-pod/consumer-749bf8484d-js6wf                     1/1       Running   0          7m
-pod/producer-b4f76b6c7-b8jhg                      1/1       Running   0          7m
-pod/zookeeper-8455f4fdc9-ht9ms                    1/1       Running   0          7m
-
-NAME                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-service/consumer                  ClusterIP   172.19.10.188   <none>        8899/TCP   7m
-service/kubernetes                ClusterIP   172.19.0.1      <none>        443/TCP    45d
-service/zookeeper                 ClusterIP   172.19.10.253   <none>        2181/TCP   7m
-```
-
-
-
-Expose consumer a public IP, or add ingress to it, Visit consumer via browser, you will see the greetings.
-
-```
-Greetings from Dubbo Docker
-```
-
-
-
-This sample tested on Aliyun Container Service for Kubernetes.
