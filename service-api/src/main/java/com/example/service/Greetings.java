@@ -5,5 +5,6 @@ package com.example.service;
  */
 public interface Greetings {
     String say(String name);
+    String sayMulti(String... words);
     String hello(User user);
 }

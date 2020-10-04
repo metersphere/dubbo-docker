@@ -11,7 +11,9 @@
     <dubbo:protocol name="dubbo" port="20880" />
 
     <dubbo:service interface="com.example.service.Greetings" ref="greetingService"/>
+    <dubbo:service interface="com.example.service.TestMath" ref="testMath"/>
 
     <bean id="greetingService" class="com.example.service.producer.GreetingsImpl" />
+    <bean id="testMath" class="com.example.service.producer.TestMathImpl" />
 
 </beans>
