@@ -1,6 +1,6 @@
 # Dubbo 应用 Demo
 
-一个使用了 Dubbo RPC 框架的 SpringBoo 应用，提供了 docker compose 文件方便运行
+一个使用了 Dubbo RPC 框架的 SpringBoot 应用，提供了 docker compose 文件方便运行
 
 ## 使用方式
 
